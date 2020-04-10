@@ -7,4 +7,5 @@ Nutrition App For Students - Find student-friendly recipes and track calorie int
 Kayla Smith
 Livia Barwick
 Jasmine Mittal
+Maryum Shabazz
 
