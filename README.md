@@ -6,4 +6,5 @@ Nutrition App For Students - Find student-friendly recipes and track calorie int
 # Collaborators
 Kayla Smith
 Livia Barwick
+Jasmine Mittal
 
