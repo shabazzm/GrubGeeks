@@ -1,55 +1,15 @@
-<!DOCTYPE html>
-<html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <title>Grub Geeks</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+<!--File for homepage using extension from base htnml-->
 
-  </head>
-  <body style="background-color: #5cd895;">
-    <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #5cd895;">
-    <a class="navbar-brand" href="templates\index.html"><img src="static\logo.png" width="150" height="75" alt=""></a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNavDropdown">
-      <ul class="navbar-nav">
-        <li class="nav-item active">
-          <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Forum</a>
-        </li>
-
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Food
-          </a>
-          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-            <a class="dropdown-item" href="#">Soup</a>
-            <a class="dropdown-item" href="#">Sandwich</a>
-            <a class="dropdown-item" href="#">Entrees</a>
-          </div>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Sign Up</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Login</a>
-        </li>
-
-      </ul>
-    </div>
-  </nav>
-
+{% extends "base.html "%}
+{% block content %}
+  <!--jumbotron to hold info about site-->
   <div class="jumbotron" style="background-color: #379683; color:#05386b" height="50%">
     <h1 class="display-4">Wecome to Grub Geeks!</h1>
     <p class="lead">A nutritional website with calorie calculator designed for students</p>
-
   </div>
 
 
-
+  <!--Carousel for recipe photos-->
   <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
   <div class="carousel-inner">
     <div class="carousel-item active">
@@ -63,18 +23,4 @@
     </div>
   </div>
 </div>
-
-
-
-
-  <!-- jQuery library -->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-
-  <!-- Popper JS -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-
-  <!-- Latest compiled JavaScript -->
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-
-  </body>
-</html>
+{% endblock %}
