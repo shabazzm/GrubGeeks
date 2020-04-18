@@ -1,0 +1,59 @@
+<!--File for homepage using extension for entree gallery htnml-->
+
+{% extends "base.html "%}
+{% block content %}
+
+  <div class="container">
+  <div class="row">
+    <div class="col">
+      <div class="card" style="width: 18rem;">
+        <a href="{{ url_for('chicken_quesadila') }}"><img class="card-img-top" src="static\chickenquesadila.jpg" alt="Card image cap"></a>
+      </div>
+        <div class="card-body">
+          Chicken Quessadilla
+        </div>
+      </div>
+
+
+    <div class="col">
+      <div class="card" style="width: 18rem;">
+        <a href="{{ url_for('roasted_bsprouts') }}"><img class="card-img-top" src="static\bsprouts.jpg" alt="Card image cap"></a>
+      </div>
+        <div class="card-body">
+          Roasted Brussel sprouts
+        </div>
+    </div>
+    <div class="col">
+      3 of 3
+    </div>
+
+  </div>
+  <div class="row">
+    <div class="col">
+      1 of 3
+    </div>
+    <div class="col">
+      1 of 3
+    </div>
+    <div class="col">
+      2 of 3
+    </div>
+    <div class="col">
+      3 of 3
+    </div>
+  </div
+  <div class="row">
+    <div class="col">
+      1 of 3
+    </div>
+    <div class="col">
+      2 of 3
+    </div>
+    <div class="col">
+      3 of 3
+    </div>
+  </div>
+</div>
+
+
+{% endblock %}
