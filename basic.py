@@ -1,7 +1,7 @@
 from flask import Flask, render_template,session,redirect,url_for,request
 
 
-app =Flask(__name__)
+app =Flask(__name__, template_folder='templates')
 
 @app.route('/')
 def index():
