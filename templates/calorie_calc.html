@@ -1,0 +1,13 @@
+<!--File for Calorie Calculator Page using extension from base html-->
+
+{% extends "base.html" %}
+{% block content %}
+
+<h1>TESTING!!!!<h1>
+<ul>
+{%for item in Recipes%}
+    <li>{{item.name}}: {{item.calories}}</li>
+{%endfor%}
+<ul>
+
+{% endblock %}
