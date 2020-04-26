@@ -1,23 +1,14 @@
 import os
 from flask import Flask, render_template,session,redirect,url_for,request
-from flask_sqlalchemy import SQLAlchemy
+from dbModels import db, Recipe_Calories, User_Posts, User_Accounts, Post_Replies
 
-basedir = os.path.abspath(os.path.dirname(__file__))
 app =Flask(__name__, template_folder='templates')
-
+basedir = os.path.abspath(os.path.dirname(__file__))
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///'+os.path.join(basedir,'grubgeeks.db')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-db = SQLAlchemy(app)
+db.init_app(app)
 
-##################################################################################
-#Database Table Models
-class Recipe_Calories(db.Model):
-    __tablename__ = 'Recipe_Calories'
-    id = db.Column('id', db.Integer, primary_key=True)
-    name = db.Column('name', db.Text)
-    calories = db.Column('calories', db.Integer)
-##################################################################################
-
+#App Routes
 @app.route('/')
 def index():
     return render_template('index.html')
