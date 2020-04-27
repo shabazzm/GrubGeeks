@@ -1,10 +1,8 @@
 #Database Table Models
-#Recipe_Calories Table
-#from extensions import db
 from flask_sqlalchemy import SQLAlchemy
 db = SQLAlchemy()
 
-#Recipe Calories
+#Recipe Calories Model
 class Recipe_Calories(db.Model):
     __tablename__ = 'recipe_calories'
     recipe_id = db.Column('recipe_id',
@@ -18,7 +16,7 @@ class Recipe_Calories(db.Model):
                db.Integer,
                nullable=False)
 
-#User Accounts
+#User Accounts Model
 class User_Accounts(db.Model):
     __tablename__ = 'user_accounts'
     __table_args__ = {'sqlite_autoincrement': True}
@@ -53,7 +51,7 @@ class User_Accounts(db.Model):
         self.password_salt = password_salt
         self.password_hash_algorithm = password_hash_algorithm
 
-#User Posts
+#User Posts Model
 class User_Posts(db.Model):
     __tablename__ = 'user_posts'
     __table_args__ = {'sqlite_autoincrement': True}
@@ -82,7 +80,7 @@ class User_Posts(db.Model):
         self.main_post_content = main_post_content
         self.date_created = date_created
 
-#Post Replies
+#Post Replies Model
 class Post_Replies(db.Model):
     __tablename__ = 'post_replies'
     __table_args__ = {'sqlite_autoincrement': True}
