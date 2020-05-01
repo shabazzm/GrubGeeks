@@ -1,7 +1,9 @@
 #Database Table Models
-from flask_sqlalchemy import SQLAlchemy
-db = SQLAlchemy()
+from myproject import login_manager, db
+from werkzeug.security import generate_password_hash,check_password_hash
+from flask_login import UserMixin
 
+@login_manager.user_loader
 #Recipe Calories Model
 class Recipe_Calories(db.Model):
     __tablename__ = 'recipe_calories'
@@ -17,7 +19,7 @@ class Recipe_Calories(db.Model):
                nullable=False)
 
 #User Accounts Model
-class User_Accounts(db.Model):
+class User_Accounts(db.Model, UserMixin):
     __tablename__ = 'user_accounts'
     __table_args__ = {'sqlite_autoincrement': True}
     user_id = db.Column('user_id',

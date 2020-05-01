@@ -1,14 +1,7 @@
-import os
-from flask import Flask, render_template,session,redirect,url_for,request
-from dbModels import db, Recipe_Calories, User_Posts, User_Accounts, Post_Replies
-from flask_migrate import Migrate
-
-app =Flask(__name__, template_folder='templates')
-basedir = os.path.abspath(os.path.dirname(__file__))
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///'+os.path.join(basedir,'grubgeeks.db')
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-db.init_app(app)
-migrate = Migrate(app, db)
+from myproject import app,db
+from flask import Flask, render_template,session,redirect,url_for,request, flash, abort
+from myproject.dbModels import User_Accounts, Recipe_Calories, User_Posts, Post_Replies
+from werkzeug.security import generate_password_hash,check_password_hash
 
 #App Routes
 @app.route('/')
@@ -23,8 +16,8 @@ def entrees_gallery():
 #route to calorie calculator
 @app.route('/calorie_calc')
 def calorie_calc():
-    Recipes = Recipe_Calories.query.all()
-    return render_template('calorie_calc.html', Recipes = Recipes)
+    #Recipes = Recipe_Calories.query.all()
+    return render_template('calorie_calc.html')
 
 #routes to 9 recipe pages
 @app.route('/roasted_bsprouts')
