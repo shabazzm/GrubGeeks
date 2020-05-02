@@ -1,12 +1,56 @@
 from myproject import app,db
 from flask import Flask, render_template,session,redirect,url_for,request, flash, abort
+from flask_login import login_user,login_required,logout_user
 from myproject.dbModels import User_Accounts, Recipe_Calories, User_Posts, Post_Replies
-from werkzeug.security import generate_password_hash,check_password_hash
+from myproject.forms import LoginForm,RegistrationForm
 
 #App Routes
-@app.route('/')
-def index():
+@app.route('/home')
+def home():
     return render_template('index.html')
+
+@app.route('/welcome')
+@login_required
+def welcome_user():
+    return render_template('welcome_user.html')
+
+@app.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    flash("You logged out!")
+    return redirect(url_for('home'))
+
+@app.route('/login',methods=['GET','POST'])
+def login():
+    form = LoginForm()
+    if form.validate_on_submit():
+        user = User_Accounts.query.filter_by(email_address=form.email_address.data).first()
+        if user.check_password(form.password.data) and user is not None:
+            login_user(user)
+            flash('Logged in Successfully')
+            next = request.args.get('next')
+
+            if next == None or not next[0]=='/':
+                next = url_for('welcome_user')
+
+            return redirect(next)
+    return render_template('login.html',form=form)
+
+@app.route('/register',methods=['GET','POST'])
+def register():
+    form = RegistrationForm()
+
+    if form.validate_on_submit():
+        user = User_Accounts(email_address=form.email_address.data,
+                            user_name=form.user_name.data,
+                            password=form.password.data)
+        db.session.add(user)
+        db.session.commit()
+        flash("You have successfully registered an account!")
+        return redirect(url_for('login'))
+
+    return render_template('register.html',form=form)
 
 #routes to food gallery
 @app.route('/entrees_gallery')

@@ -1,0 +1,13 @@
+<!--File for Register using extension from base html-->
+
+{% extends "base.html" %}
+{% block content %}
+  <form method="post">
+    {{form.hidden_tag()}}
+    {{form.email_address.label}}{{form.email_address()}}<br>
+    {{form.user_name.label}}{{form.user_name()}}<br>
+    {{form.password.label}}{{form.password()}}<br>
+    {{form.pass_confirm.label}}{{form.pass_confirm()}}<br>
+    {{form.submit()}}
+  </form>
+{% endblock %}

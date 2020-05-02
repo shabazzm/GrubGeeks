@@ -6,6 +6,7 @@ from flask import Flask
 
 login_manager = LoginManager()
 app =Flask(__name__)
+app.config['SECRET_KEY'] = 'mysecretkey'
 basedir = os.path.abspath(os.path.dirname(__file__))
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///'+os.path.join(basedir,'grubgeeks.db')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False

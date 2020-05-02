@@ -4,6 +4,9 @@ from werkzeug.security import generate_password_hash,check_password_hash
 from flask_login import UserMixin
 
 @login_manager.user_loader
+def load_user(user_id):
+    return User_Accounts.query.get(user_id)
+
 #Recipe Calories Model
 class Recipe_Calories(db.Model):
     __tablename__ = 'recipe_calories'
@@ -34,24 +37,22 @@ class User_Accounts(db.Model, UserMixin):
                     db.String(254),
                     nullable=False,
                     unique=True)
-    password = db.Column('password',
+    password_hash = db.Column('password_hash',
                db.String(200),
                nullable=False)
-    password_salt = db.Column('password_salt',
-                    db.String(50),
-                    nullable=True)
-    password_hash_algorithm = db.Column('password_hash_algorithm',
-                              db.String(50),
-                              nullable=False)
     user_posts = db.relationship('User_Posts', backref='user_accounts', lazy='dynamic')
     post_replies = db.relationship('Post_Replies', backref='user_accounts', lazy='dynamic')
 
-    def __init__(self, user_name, email_address, password, password_salt, password_hash_algorithm):
+    def __init__(self, email_address, user_name, password):
         self.user_name = user_name
         self.email_address = email_address
-        self.password = password
-        self.password_salt = password_salt
-        self.password_hash_algorithm = password_hash_algorithm
+        self.password_hash = generate_password_hash(password)
+
+    def check_password(self,password):
+        return check_password_hash(self.password_hash,password)
+
+    def get_id(self):
+        return (self.user_id)
 
 #User Posts Model
 class User_Posts(db.Model):

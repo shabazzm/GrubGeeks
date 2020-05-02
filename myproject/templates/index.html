@@ -6,6 +6,9 @@
   <div class="jumbotron" style="background-color: #379683; color:#05386b" height="25%">
     <h1 class="display-4">Welcome to Grub Geeks!</h1>
     <p class="lead">A nutritional website with calorie calculator designed for students</p>
+    {% if current_user.is_authenticated %}
+    <p>Hello {{current_user.user_name}}</p>
+    {% endif %}
   </div>
 
 
