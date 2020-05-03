@@ -5,6 +5,10 @@ from myproject.dbModels import User_Accounts, Recipe_Calories, User_Posts, Post_
 from myproject.forms import LoginForm,RegistrationForm
 
 #App Routes
+@app.route('/')
+def index():
+    return render_template('index.html')
+
 @app.route('/home')
 def home():
     return render_template('index.html')
