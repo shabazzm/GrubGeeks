@@ -2,10 +2,28 @@
 
 {% extends "base.html" %}
 {% block content %}
-  <form method="post">
+<div class="container "style="width: 25rem; margin:0 auto; float:none;" >
+  <form method="POST" >
     {{form.hidden_tag()}}
-    {{form.email_address.label}}{{form.email_address()}}<br>
-    {{form.password.label}}{{form.password()}}<br>
-    {{form.submit()}}
+
+    <div class="form-group">
+      {{form.email_address.label(class="form-group")}}
+      {{form.email_address(class='form-control')}}
+    </div>
+    <div class="form-group">
+      {{form.password.label(class="form-group")}}
+      {{form.password(class='form-control')}}
+    </div>
+    <div class="form-group">
+      {{form.submit(class='btn btn-info')}}
+    </div>
+
+
+
+    <div class="login-signup">
+            <span>Don't have an account? <a href="{{ url_for('register') }}">Sign up.</a></span>
+    </div>
   </form>
+</div>
+
 {% endblock %}
