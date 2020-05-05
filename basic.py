@@ -4,6 +4,8 @@ from flask_login import login_user,login_required,logout_user
 from myproject.dbModels import User_Accounts, Recipe_Calories, User_Posts, Post_Replies
 from myproject.forms import LoginForm,RegistrationForm, AddPostForm
 from datetime import datetime
+from sqlalchemy.sql import select
+from sqlalchemy import create_engine
 
 #App Routes
 @app.route('/home')
@@ -52,24 +54,28 @@ def register():
 # main forum page
 @app.route('/forum')
 def forum():
-    query="SELECT * FROM User_Posts ORDER BY date_created DESC"
-    posts = db.session.execute(query)
-    db.session.commit()
-    return render_template('forum.html')
+    # query="SELECT * FROM User_Posts ORDER BY date_created DESC"
+    # posts = db.session.execute(query)
+    # db.session.commit()
+    posts = User_Posts.query.order_by(User_Posts.date.desc())
+    return render_template('forum.html', posts=posts)
     #posts = User_Posts.query.filter_by(*).order_by()
 
 # add post to forum
 @app.route('/add_post', methods=['GET', 'POST'])
 def add_post():
     form = AddPostForm()
-    if request.method == 'GET':
-        return render_template('add_post.html', form=form)
-    elif form.validate_on_submit():
-        select = "SELECT MAX(User_Posts.post_id) FROM User_Posts"
-        result = fetch(select)
-        post_id = result[0]['MAX(User_Posts.post_id']
-        post_id += 1
-        user_id = flask_login.current_user.user_id
+    if form.validate_on_submit():
+        engine = create_engine('sqlite:///myproject\\grubgeeks.db')
+        res = select([User_Posts])
+        # select = "SELECT MAX(User_Posts.post_id) FROM User_Posts"
+        result = engine.execute(res)
+        max_id=0
+        for row in result:
+            if row.post_id > max_id:
+                max_id = row.post_id
+        post_id = max_id + 1
+        user_id = current_user.user_id
         date_created = datetime.now()
         subject = form.subject.data
         main_post_content = form.main_post_content.data
@@ -78,13 +84,17 @@ def add_post():
         db.session.commit()
         url = ("/post/" + str(post_id) + "/add_success/")
         return redirect(url)
+    else:
+        return render_template('add_post.html', form=form)
 
 @app.route('/post/<string:post_id>/add_success/')
-    def successful_add_post(post_id):
-        id = int(post_id)
-        select = "SELECT post_id, user_id, subject, post_content, date_created from User_Posts WHERE post_id = id"
-        result = fetch(select)
-        return render_template('post.html', post=result)
+def successful_add_post(post_id):
+    id = int(post_id)
+    select = "SELECT post_id, user_id, subject, post_content, date_created from User_Posts WHERE post_id = " + id
+    result = db.session.execute(select)
+    auth_query = "SELECT user_name FROM User_Accounts WHERE user_id = " + result.user_id
+    auth = db.session.execute(auth_query)
+    return render_template('post.html', post=result, author=auth)
 
 # view a specific post's thread / post reply
 @app.route('/post/<string:post_id>', methods=['GET', 'POST'])
