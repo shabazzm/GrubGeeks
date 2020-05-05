@@ -1,11 +1,11 @@
 from myproject import app,db
 from flask import Flask, render_template,session,redirect,url_for,request, flash, abort
-from flask_login import login_user,login_required,logout_user
+from flask_login import login_user,login_required,logout_user, current_user
 from myproject.dbModels import User_Accounts, Recipe_Calories, User_Posts, Post_Replies
 from myproject.forms import LoginForm,RegistrationForm, AddPostForm
 from datetime import datetime
 from sqlalchemy.sql import select
-from sqlalchemy import create_engine
+from flask_sqlalchemy import SQLAlchemy
 
 #App Routes
 @app.route('/home')
@@ -54,36 +54,30 @@ def register():
 # main forum page
 @app.route('/forum')
 def forum():
-    # query="SELECT * FROM User_Posts ORDER BY date_created DESC"
-    # posts = db.session.execute(query)
-    # db.session.commit()
-    posts = User_Posts.query.order_by(User_Posts.date.desc())
-    return render_template('forum.html', posts=posts)
-    #posts = User_Posts.query.filter_by(*).order_by()
+    posts = User_Posts.query.order_by(User_Posts.date_created(desc()))
+    post_count = User_Posts.query.count()
+    print(User_Posts.query.count())
+    return render_template('forum.html', posts=posts, post_count=post_count)
 
 # add post to forum
 @app.route('/add_post', methods=['GET', 'POST'])
 def add_post():
     form = AddPostForm()
     if form.validate_on_submit():
-        engine = create_engine('sqlite:///myproject\\grubgeeks.db')
-        res = select([User_Posts])
-        # select = "SELECT MAX(User_Posts.post_id) FROM User_Posts"
-        result = engine.execute(res)
-        max_id=0
-        for row in result:
-            if row.post_id > max_id:
-                max_id = row.post_id
-        post_id = max_id + 1
+        # posts = User_Posts.query.order_by(User_Posts.post_id.desc())
+        # print(posts)
+        # post_id = posts[1].post_id
+        # post_id += 1
         user_id = current_user.user_id
         date_created = datetime.now()
         subject = form.subject.data
         main_post_content = form.main_post_content.data
-        post = User_Posts(user_id, subject, main_post_content, date_created)
+        post = User_Posts(user_id=user_id, subject=subject, main_post_content=main_post_content, date_created=date_created)
         db.session.add(post)
         db.session.commit()
-        url = ("/post/" + str(post_id) + "/add_success/")
-        return redirect(url)
+        flash("Post Created")
+        # url = ("/post/" + str(post_id) + "/add_success/")
+        return redirect(url_for('forum'))
     else:
         return render_template('add_post.html', form=form)
 

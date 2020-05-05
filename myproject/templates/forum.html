@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+{% block content %}
+	<h1> Total Posts: {{post_count}}
+	{% for i in posts %}
+		<h3> {{ i.subject }} </h3> <br>
+{% endfor %}
+{% endblock %}
