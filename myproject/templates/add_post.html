@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block content %}
+	<h1 class="display-4">Add Post</h1>
+	{% if current_user.is_authenticated %}
+	<form method="post">
+		{{form.hidden_tag()}}
+		{{form.subject.label}}{{form.subject()}}<br>
+		{{form.main_post_content.label}}{{form.main_post_content()}}<br>
+		{{form.submit()}}
+	</form>
+	{% else %}
+	{% endif %}
+
+{% endblock %}

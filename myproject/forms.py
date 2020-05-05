@@ -22,3 +22,8 @@ class RegistrationForm(FlaskForm):
     def check_username(self,field):
         if User_Accounts.query.filter_by(user_name).first():
             raise ValidationError('Username is already taken!')
+
+class AddPostForm(FlaskForm):
+    subject = StringField('Subject', validators=[DataRequired()])
+    main_post_content = StringField('Post Content', validators=[DataRequired()])
+    submit = SubmitField('Add Post')

@@ -77,7 +77,8 @@ class User_Posts(db.Model):
                    nullable=False)
     post_replies = db.relationship('Post_Replies', backref='user_posts',lazy='dynamic')
 
-    def __init__(self, user_id, subject, main_post_content, date_created):
+    def __init__(self, post_id, user_id, subject, main_post_content, date_created):
+        self.post_id = post_id
         self.user_id = user_id
         self.subject = subject
         self.main_post_content = main_post_content
