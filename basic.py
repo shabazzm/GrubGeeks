@@ -91,9 +91,18 @@ def successful_add_post(post_id):
     return render_template('post.html', post=result, author=auth)
 
 # view a specific post's thread / post reply
-@app.route('/post/<string:post_id>', methods=['GET', 'POST'])
+@app.route('/post/<int:post_id>', methods=['GET', 'POST'])
 def post(post_id):
-    return render_template('index.html')
+    post = User_Posts.query.filter_by(post_id=post_id)
+    replies = Post_Replies.query.filter_by(post_id=post_id)
+    if form.validate_on_submit():
+        reply = Post_Replies(post_id=post_id, user_id=current_user.user_id, reply_content=form.reply_content, date_created=datetime.now())
+        db.session.add(reply)
+        db.session.commit()
+        flash("Reply Posted")
+        return redirect(url_for('/post/' + post_id))
+    else:
+        return render_template('post.html', post=post, replies=replies)
 
 #routes to food gallery
 @app.route('/entrees_gallery')
