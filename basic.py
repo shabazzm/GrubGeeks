@@ -90,7 +90,7 @@ def successful_add_post(post_id):
     auth = db.session.execute(auth_query)
     return render_template('post.html', post=result, author=auth)
 
-# view a specific post's thread / post reply
+# view a specific post's thread (get) / post reply (post)
 @app.route('/post/<int:post_id>', methods=['GET', 'POST'])
 def post(post_id):
     post = User_Posts.query.filter_by(post_id=post_id)
