@@ -2,7 +2,7 @@ from myproject import app,db
 from flask import Flask, render_template,session,redirect,url_for,request, flash, abort
 from flask_login import login_user,login_required,logout_user, current_user
 from myproject.dbModels import User_Accounts, Recipe_Calories, User_Posts, Post_Replies
-from myproject.forms import LoginForm,RegistrationForm, AddPostForm
+from myproject.forms import LoginForm,RegistrationForm, AddPostForm, AddReplyForm
 from datetime import datetime
 from sqlalchemy.sql import select
 from flask_sqlalchemy import SQLAlchemy
@@ -95,6 +95,7 @@ def successful_add_post(post_id):
 def post(post_id):
     post = User_Posts.query.filter_by(post_id=post_id)
     replies = Post_Replies.query.filter_by(post_id=post_id)
+    form = AddReplyForm()
     if form.validate_on_submit():
         reply = Post_Replies(post_id=post_id, user_id=current_user.user_id, reply_content=form.reply_content, date_created=datetime.now())
         db.session.add(reply)
@@ -102,7 +103,7 @@ def post(post_id):
         flash("Reply Posted")
         return redirect(url_for('/post/' + post_id))
     else:
-        return render_template('post.html', post=post, replies=replies)
+        return render_template('post.html', post=post, replies=replies, form=form)
 
 #routes to food gallery
 @app.route('/entrees_gallery')

@@ -1,26 +1,25 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="jumbotron">
-    <h1>Grub Geeks</h1>
-    <p>Welcome to the recipe sharing forum!</p>
-  </div>
-
-    <h1> Total Posts: {{post_count}}</h1>
-	{% for i in posts %}
-        <h3> {{ i.subject }} </h3> 
-        <br>
-    
-    <div class="container">     
-        {# Go through each blog post #}
-        {% for post in posts.items %}
-          <div class="card" >   
-            <div class="card-body">
-                    <h2><a class="card-title">{{ posts.posts }}</a></h2>
-                    <a href="{{ url_for('post.post', post=post.post_id) }}" class="btn btn-primary">Read more</a>
-            </div>
-          </div>
+    <h2>{{ post.subject }} </h2>
+    <h3> Posted by: {{ post.user_id }} on {{ post.date_created }} </h3>
+    <p> {{ post.main_post_content }} </p>
+    <hr>
+    {% if current_user.is_authenticated %}
+        <form method="post">
+            {{form.hidden_tag()}}
+            {{form.reply_content.label}}{{form.reply_content()}} <br>
+            {{form.submit()}}
+        </form>
+    {% else %}
+        <a href="/login">Login</a> or <a href="/register">Register</a> to post a reply.
+    {% endif %}
+    <hr>
+    {#
+    {% for reply in replies %}
+    <div class="card">
+        <div class="card-body">
+            <p> {{ reply.reply_content }} </p>
+        </div>
     </div>
-    {% endfor %}
-
-{% endfor %}
+    {% endfor %} #}
 {% endblock %}
