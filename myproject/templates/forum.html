@@ -1,7 +1,25 @@
 {% extends "base.html" %}
 {% block content %}
-	<h1> Total Posts: {{post_count}}
-	{% for i in posts %}
-		<h3> {{ i.subject }} </h3> <br>
-{% endfor %}
+<div class="jumbotron">
+    <h1>Grub Geeks</h1>
+    <p>Welcome to the recipe sharing forum!</p>
+  </div>
+
+    <h1> Total Posts: {{post_count}}</h1>
+    
+    <div class="container">     
+        {# Go through each blog post #}
+        {% for post in posts %}
+          <div class="card" >   
+            <div class="card-body">
+                    <h2><a class="card-title">{{ post.subject }}</a></h2>
+                    <a href="/post/{{post.post_id}}" class="btn btn-primary">Read More </a>
+                    
+            </div>
+          </div>
+        {% endfor %}
+    </div>
+        
+
+
 {% endblock %}
