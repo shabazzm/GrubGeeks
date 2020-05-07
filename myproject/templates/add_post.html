@@ -1,12 +1,17 @@
+
 {% extends "base.html" %}
 {% block content %}
-	<h1 class="display-4">Add Post</h1>
+	<h1 class="display-4">Add a Post</h1>
 	{% if current_user.is_authenticated %}
 	<form method="post">
-		{{form.hidden_tag()}}
-		{{form.subject.label}}{{form.subject()}}<br>
-		{{form.main_post_content.label}}{{form.main_post_content()}}<br>
-		{{form.submit()}}
+        {{form.hidden_tag()}}
+        <h2>Subject: {{form.subject.label}}{{form.subject()}}</h2>
+        <br>
+        <h2>Your message: {{form.main_post_content.label}}{{form.main_post_content.data}}</h2>
+        <br>
+        {{current_user.user_id}}
+        {{datetime.now()}}
+        <button>{{form.submit()}}</button>
 	</form>
 	{% else %}
 	{% endif %}
