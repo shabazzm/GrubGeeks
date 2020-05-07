@@ -6,21 +6,20 @@
   </div>
 
     <h1> Total Posts: {{post_count}}</h1>
-	{% for i in posts %}
-        <h3> {{ i.subject }} </h3> 
-        <br>
     
     <div class="container">     
         {# Go through each blog post #}
-        {% for post in posts.items %}
+        {% for post in posts %}
           <div class="card" >   
             <div class="card-body">
-                    <h2><a class="card-title">{{ posts.posts }}</a></h2>
-                    <a href="{{ url_for('post.post', post=post.post_id) }}" class="btn btn-primary">Read more</a>
+                    <h2><a class="card-title">{{ post.subject }}</a></h2>
+                    <a href="/post/{{post.post_id}}" class="btn btn-primary">Read More </a>
+                    
             </div>
           </div>
+        {% endfor %}
     </div>
-    {% endfor %}
+        
 
-{% endfor %}
+
 {% endblock %}

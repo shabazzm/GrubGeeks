@@ -6,6 +6,7 @@ from myproject.forms import LoginForm,RegistrationForm, AddPostForm
 from datetime import datetime
 from sqlalchemy.sql import select
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import desc
 
 #App Routes
 @app.route('/home')
@@ -54,7 +55,7 @@ def register():
 # main forum page
 @app.route('/forum')
 def forum():
-    posts = User_Posts.query.order_by(User_Posts.date_created(desc()))
+    posts = User_Posts.query.order_by(desc(User_Posts.date_created))
     post_count = User_Posts.query.count()
     print(User_Posts.query.count())
     return render_template('forum.html', posts=posts, post_count=post_count)
