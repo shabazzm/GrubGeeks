@@ -29,5 +29,5 @@ class AddPostForm(FlaskForm):
     submit = SubmitField('Add Post')
 
 class AddReplyForm(FlaskForm):
-    content = StringField('Content', validators=[DataRequired()])
+    reply_content = StringField('Reply Content', validators=[DataRequired()])
     submit = SubmitField('Post Reply')

@@ -94,16 +94,19 @@ def successful_add_post(post_id):
 # view a specific post's thread (get) / post reply (post)
 @app.route('/post/<int:post_id>', methods=['GET', 'POST'])
 def post(post_id):
-    post = User_Posts.query.filter_by(post_id=post_id)
-    replies = Post_Replies.query.filter_by(post_id=post_id)
+    post = User_Posts.query.filter_by(post_id=post_id).first()
     form = AddReplyForm()
     if form.validate_on_submit():
-        reply = Post_Replies(post_id=post_id, user_id=current_user.user_id, reply_content=form.reply_content, date_created=datetime.now())
-        db.session.add(reply)
+        reply_content = form.reply_content.data
+        user_id=current_user.user_id
+        date_created=datetime.now()
+        db.session.execute("INSERT INTO Post_Replies (post_id, user_id, reply_content, date_created) VALUES (" + str(post_id) + ", " + str(user_id) + ", '" + reply_content + "', '" +  str(date_created) + "')")
         db.session.commit()
         flash("Reply Posted")
-        return redirect(url_for('/post/' + post_id))
+        return redirect('/post/' + str(post_id))
+        #return render_template('post.html', post=post, replies=replies, form=form)
     else:
+        replies = db.session.execute("SELECT reply_id, user_id, reply_content, date_created FROM Post_Replies WHERE post_id = " + str(post_id))
         return render_template('post.html', post=post, replies=replies, form=form)
 
 #routes to food gallery
