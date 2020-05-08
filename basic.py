@@ -24,7 +24,10 @@ def login():
     form = LoginForm()
     if form.validate_on_submit():
         user = User_Accounts.query.filter_by(email_address=form.email_address.data).first()
-        if user.check_password(form.password.data) and user is not None:
+        if user is None:
+            flash('This user does not exist in our system. Please try again.')
+
+        elif user.check_password(form.password.data) and user is not None:
             login_user(user)
             next = request.args.get('next')
 
@@ -32,7 +35,8 @@ def login():
                 next = url_for('home')
 
             return redirect(next)
-        flash('Invalid username/password combination')
+        else:
+            flash('Invalid username/password combination')
     return render_template('login.html',form=form)
 
 @app.route('/register',methods=['GET','POST'])
@@ -40,8 +44,9 @@ def register():
     form = RegistrationForm()
 
     if form.validate_on_submit():
-        existing_user = User_Accounts.query.filter_by(email_address=form.email_address.data).first()
-        if existing_user is None:
+        existing_user_email = User_Accounts.query.filter_by(email_address=form.email_address.data).first()
+        existing_user_name = User_Accounts.query.filter_by(user_name=form.user_name.data).first()
+        if existing_user_email is None and existing_user_name is None:
             user = User_Accounts(email_address=form.email_address.data,
                                 user_name=form.user_name.data,
                                 password=form.password.data)
@@ -49,7 +54,9 @@ def register():
             db.session.commit()
             flash("You have successfully registered an account!")
             return redirect(url_for('login'))
-        flash('A user already exists with that email address.')
+
+        else:
+            flash('A user already exists with that email address or username.')
     return render_template('register.html',form=form)
 
 #routes to food gallery
