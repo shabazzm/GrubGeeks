@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
     <h2>{{ post.subject }} </h2>
-    <h3> Posted by: {{ post.user_id }} on {{ post.date_created }} </h3>
+    <h3> Posted by: {{ author.user_name }} on {{ post.date_created }} </h3>
     <p> {{ post.main_post_content }} </p>
     <hr>
     {% if current_user.is_authenticated %}

@@ -96,6 +96,7 @@ def successful_add_post(post_id):
 def post(post_id):
     post = User_Posts.query.filter_by(post_id=post_id).first()
     form = AddReplyForm()
+    author = User_Accounts.query.filter_by(user_id=post.user_id).first()
     if form.validate_on_submit():
         reply_content = form.reply_content.data
         user_id=current_user.user_id
@@ -104,10 +105,9 @@ def post(post_id):
         db.session.commit()
         flash("Reply Posted")
         return redirect('/post/' + str(post_id))
-        #return render_template('post.html', post=post, replies=replies, form=form)
     else:
         replies = db.session.execute("SELECT reply_id, user_id, reply_content, date_created FROM Post_Replies WHERE post_id = " + str(post_id))
-        return render_template('post.html', post=post, replies=replies, form=form)
+        return render_template('post.html', post=post, replies=replies, form=form, author=author)
 
 #routes to food gallery
 @app.route('/entrees_gallery')
