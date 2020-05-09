@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block content %}
+    <h2>{{ post.subject }} </h2>
+    <h3> Posted by: {{ author.user_name }} on {{ post.date_created }} </h3>
+    <p> {{ post.main_post_content }} </p>
+    <hr>
+    {% if current_user.is_authenticated %}
+        <form method="post">
+            {{form.hidden_tag()}}
+            {{form.reply_content.label}}{{form.reply_content()}} <br>
+            {{form.submit()}}
+        </form>
+    {% else %}
+        <a href="/login">Login</a> or <a href="/register">Register</a> to post a reply.
+    {% endif %}
+    <hr>
+    
+    {% for reply in replies %}
+    <div class="card">
+        <div class="card-body">
+            <p> {{ reply.reply_content }} </p>
+        </div>
+    </div>
+    {% endfor %} 
+    
+{% endblock %}

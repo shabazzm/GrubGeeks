@@ -1,8 +1,12 @@
 from myproject import app,db
 from flask import Flask, render_template,session,redirect,url_for,request, flash, abort
-from flask_login import login_user,login_required,logout_user
+from flask_login import login_user,login_required,logout_user, current_user
 from myproject.dbModels import User_Accounts, Recipe_Calories, User_Posts, Post_Replies
-from myproject.forms import LoginForm,RegistrationForm
+from myproject.forms import LoginForm,RegistrationForm, AddPostForm, AddReplyForm
+from datetime import datetime
+from sqlalchemy.sql import select
+from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import desc
 
 #App Routes
 @app.route('/')
@@ -50,6 +54,64 @@ def register():
         return redirect(url_for('login'))
 
     return render_template('register.html',form=form)
+
+
+# main forum page
+@app.route('/forum')
+def forum():
+    posts = User_Posts.query.order_by(desc(User_Posts.date_created))
+    post_count = User_Posts.query.count()
+    print(User_Posts.query.count())
+    return render_template('forum.html', posts=posts, post_count=post_count)
+
+# add post to forum
+@app.route('/add_post', methods=['GET', 'POST'])
+def add_post():
+    form = AddPostForm()
+    if form.validate_on_submit():
+        # posts = User_Posts.query.order_by(User_Posts.post_id.desc())
+        # print(posts)
+        # post_id = posts[1].post_id
+        # post_id += 1
+        user_id = current_user.user_id
+        date_created = datetime.now()
+        subject = form.subject.data
+        main_post_content = form.main_post_content.data
+        post = User_Posts(user_id=user_id, subject=subject, main_post_content=main_post_content, date_created=date_created)
+        db.session.add(post)
+        db.session.commit()
+        flash("Post Created")
+        # url = ("/post/" + str(post_id) + "/add_success/")
+        return redirect(url_for('forum'))
+    else:
+        return render_template('add_post.html', form=form)
+
+@app.route('/post/<string:post_id>/add_success/')
+def successful_add_post(post_id):
+    id = int(post_id)
+    select = "SELECT post_id, user_id, subject, post_content, date_created from User_Posts WHERE post_id = " + id
+    result = db.session.execute(select)
+    auth_query = "SELECT user_name FROM User_Accounts WHERE user_id = " + result.user_id
+    auth = db.session.execute(auth_query)
+    return render_template('post.html', post=result, author=auth)
+
+# view a specific post's thread (get) / post reply (post)
+@app.route('/post/<int:post_id>', methods=['GET', 'POST'])
+def post(post_id):
+    post = User_Posts.query.filter_by(post_id=post_id).first()
+    form = AddReplyForm()
+    author = User_Accounts.query.filter_by(user_id=post.user_id).first()
+    if form.validate_on_submit():
+        reply_content = form.reply_content.data
+        user_id=current_user.user_id
+        date_created=datetime.now()
+        db.session.execute("INSERT INTO Post_Replies (post_id, user_id, reply_content, date_created) VALUES (" + str(post_id) + ", " + str(user_id) + ", '" + reply_content + "', '" +  str(date_created) + "')")
+        db.session.commit()
+        flash("Reply Posted")
+        return redirect('/post/' + str(post_id))
+    else:
+        replies = db.session.execute("SELECT reply_id, user_id, reply_content, date_created FROM Post_Replies WHERE post_id = " + str(post_id))
+        return render_template('post.html', post=post, replies=replies, form=form, author=author)
 
 #routes to food gallery
 @app.route('/entrees_gallery')
