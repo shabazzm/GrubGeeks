@@ -21,7 +21,6 @@ def home():
 @login_required
 def logout():
     logout_user()
-    flash("You logged out!")
     return redirect(url_for('home'))
 
 @app.route('/login',methods=['GET','POST'])
@@ -29,15 +28,19 @@ def login():
     form = LoginForm()
     if form.validate_on_submit():
         user = User_Accounts.query.filter_by(email_address=form.email_address.data).first()
-        if user.check_password(form.password.data) and user is not None:
+        if user is None:
+            flash('This user does not exist in our system. Please try again.')
+
+        elif user.check_password(form.password.data) and user is not None:
             login_user(user)
-            flash('Logged in Successfully')
             next = request.args.get('next')
 
             if next == None or not next[0]=='/':
                 next = url_for('home')
 
             return redirect(next)
+        else:
+            flash('Invalid username/password combination')
     return render_template('login.html',form=form)
 
 @app.route('/register',methods=['GET','POST'])
@@ -45,14 +48,19 @@ def register():
     form = RegistrationForm()
 
     if form.validate_on_submit():
-        user = User_Accounts(email_address=form.email_address.data,
-                            user_name=form.user_name.data,
-                            password=form.password.data)
-        db.session.add(user)
-        db.session.commit()
-        flash("You have successfully registered an account!")
-        return redirect(url_for('login'))
+        existing_user_email = User_Accounts.query.filter_by(email_address=form.email_address.data).first()
+        existing_user_name = User_Accounts.query.filter_by(user_name=form.user_name.data).first()
+        if existing_user_email is None and existing_user_name is None:
+            user = User_Accounts(email_address=form.email_address.data,
+                                user_name=form.user_name.data,
+                                password=form.password.data)
+            db.session.add(user)
+            db.session.commit()
+            flash("You have successfully registered an account!")
+            return redirect(url_for('login'))
 
+        else:
+            flash('A user already exists with that email address or username.')
     return render_template('register.html',form=form)
 
 
