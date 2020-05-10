@@ -21,7 +21,7 @@ class RegistrationForm(FlaskForm):
 
 class AddPostForm(FlaskForm):
     subject = StringField('Subject', validators=[DataRequired()])
-    main_post_content = TextAreaField('Post Content', validators=[DataRequired()])
+    main_post_content = StringField('Post Content', validators=[DataRequired()])
     submit = SubmitField('Add Post')
 
 class AddReplyForm(FlaskForm):

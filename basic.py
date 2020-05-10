@@ -76,11 +76,7 @@ def forum():
 @app.route('/add_post', methods=['GET', 'POST'])
 def add_post():
     form = AddPostForm()
-    if form.validate_on_submit():
-        # posts = User_Posts.query.order_by(User_Posts.post_id.desc())
-        # print(posts)
-        # post_id = posts[1].post_id
-        # post_id += 1
+    if request.method == 'POST':
         user_id = current_user.user_id
         date_created = datetime.now()
         subject = form.subject.data
@@ -89,7 +85,6 @@ def add_post():
         db.session.add(post)
         db.session.commit()
         flash("Post Created")
-        # url = ("/post/" + str(post_id) + "/add_success/")
         return redirect(url_for('forum'))
     else:
         return render_template('add_post.html', form=form)
