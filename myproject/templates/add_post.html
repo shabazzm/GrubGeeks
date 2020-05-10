@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+	<h1 class="display-4">Add Post</h1>
+	{% if current_user.is_authenticated %}
+	<form method="post" class="form-group">
+		
+		{{form.subject.label(class="form-group")}}{{form.subject(class="form-control")}}<br>
+		{{form.main_post_content.label(class="form-group")}}{{form.main_post_content(class="form-control", rows="3")}}<br>
+		{{form.submit(class="btn-info")}}
+	</form>
+	{% else %}
+	<a href="/login">Login</a> or <a href="/register">Sign Up</a> to add a message
+	{% endif %}
+</div>
+
+{% endblock %}

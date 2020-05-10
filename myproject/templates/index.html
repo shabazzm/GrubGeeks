@@ -5,7 +5,7 @@
   <!--jumbotron to hold info about site-->
   <div class="jumbotron" style="background-color: #379683; color:#05386b" height="25%">
     {% if current_user.is_authenticated %}
-    <h1 class="display-4">Welcome to Grub Geeks {{current_user.user_name}}!</h1>
+    <h1 class="display-4">Welcome to Grub Geeks, {{current_user.user_name}}!</h1>
     {% else %}
     <h1 class="display-4">Welcome to Grub Geeks!</h1>
     {% endif %}
