@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField,PasswordField,SubmitField
+from wtforms import StringField,PasswordField,SubmitField, TextAreaField
 from wtforms.validators import DataRequired,Email,EqualTo
 from wtforms import ValidationError
 
@@ -25,9 +25,9 @@ class RegistrationForm(FlaskForm):
 
 class AddPostForm(FlaskForm):
     subject = StringField('Subject', validators=[DataRequired()])
-    main_post_content = StringField('Post Content', validators=[DataRequired()])
+    main_post_content = TextAreaField('Post Content', validators=[DataRequired()])
     submit = SubmitField('Add Post')
 
 class AddReplyForm(FlaskForm):
-    reply_content = StringField('Reply Content', validators=[DataRequired()])
+    reply_content = TextAreaField('Reply Content', validators=[DataRequired()])
     submit = SubmitField('Post Reply')

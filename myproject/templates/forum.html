@@ -1,11 +1,12 @@
 {% extends "base.html" %}
 {% block content %}
+<div class="container">
 <div class="jumbotron">
     <h1>Grub Geeks</h1>
     <p>Welcome to the recipe sharing forum!</p>
   </div>
 
-    <h1> Total Posts: {{post_count}}</h1>
+    {# <h1> Total Posts: {{post_count}}</h1> #}
 
     <a href="/add_post" class="btn btn-primary"> Add Post </a>
     
@@ -21,6 +22,7 @@
           </div>
         {% endfor %}
     </div>
+</div>
         
 
 
