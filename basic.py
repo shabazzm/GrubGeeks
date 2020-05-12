@@ -128,6 +128,7 @@ def calorie_calc():
     form = CalorieCalcForm()
     if form.validate_on_submit():
         # do all the stuff
+        calories_in = form.daily_calories.data
     else:
         return render_template('calorie_calc.html', form=form)
 
