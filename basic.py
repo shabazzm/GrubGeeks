@@ -2,7 +2,7 @@ from myproject import app,db
 from flask import Flask, render_template,session,redirect,url_for,request, flash, abort
 from flask_login import login_user,login_required,logout_user, current_user
 from myproject.dbModels import User_Accounts, Recipe_Calories, User_Posts, Post_Replies
-from myproject.forms import LoginForm,RegistrationForm, AddPostForm, AddReplyForm
+from myproject.forms import LoginForm,RegistrationForm, AddPostForm, AddReplyForm, CalorieCalcForm
 from datetime import datetime
 from sqlalchemy.sql import select
 from flask_sqlalchemy import SQLAlchemy
@@ -122,10 +122,14 @@ def entrees_gallery():
     return render_template('entrees_gallery.html')
 
 #route to calorie calculator
-@app.route('/calorie_calc')
+@app.route('/calorie_calc', methods=['GET', 'POST'])
 def calorie_calc():
     #Recipes = Recipe_Calories.query.all()
-    return render_template('calorie_calc.html')
+    form = CalorieCalcForm()
+    if form.validate_on_submit():
+        # do all the stuff
+    else:
+        return render_template('calorie_calc.html', form=form)
 
 #routes to 9 recipe pages
 @app.route('/roasted_bsprouts')
