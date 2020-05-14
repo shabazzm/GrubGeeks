@@ -128,9 +128,17 @@ def calorie_calc():
     form = CalorieCalcForm()
     if form.validate_on_submit():
         # do all the stuff
-        calories_in = form.daily_calories.data
+        calories_in = int(form.daily_calories.data)
+        calorie_goal = int(form.calorie_goal.data)
+        if calories_in >= calorie_goal:
+            return redirect('')
+           
     else:
         return render_template('calorie_calc.html', form=form)
+
+@app.route('/calc_results')
+def calc_results():
+    return render_template('calc_results.html')
 
 #routes to 9 recipe pages
 @app.route('/roasted_bsprouts')
