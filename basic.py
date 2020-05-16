@@ -122,23 +122,29 @@ def entrees_gallery():
     return render_template('entrees_gallery.html')
 
 #route to calorie calculator
-@app.route('/calorie_calc', methods=['GET', 'POST'])
+@app.route('/calorie_calc')
 def calorie_calc():
     #Recipes = Recipe_Calories.query.all()
+    return render_template('calorie_calc.html')
     form = CalorieCalcForm()
     if form.validate_on_submit():
         # do all the stuff
         calories_in = int(form.daily_calories.data)
         calorie_goal = int(form.calorie_goal.data)
         if calories_in >= calorie_goal:
-            return redirect('')
-           
+            return redirect('/calorie_calc')
+        else:
+        	optimal_calories = calorie_goal - calories_in
+        	return redirect('/calc_results/' + str(optimal_calories))
     else:
         return render_template('calorie_calc.html', form=form)
 
-@app.route('/calc_results')
-def calc_results():
-    return render_template('calc_results.html')
+@app.route('/calc_results/<int:optimal_calories>')
+def calc_results(optimal_calories):
+	calorie_low = optimal_calories-50
+	calorie_high = optimal_calories+50
+	recipes = select([Recipe_Calories]).where(between(Recipe_Calories.calories, calorie_low, calorie_high))
+	return render_template('calc_results.html', recipes=recipes)
 
 #routes to 9 recipe pages
 @app.route('/roasted_bsprouts')
