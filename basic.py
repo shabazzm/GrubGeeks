@@ -124,8 +124,6 @@ def entrees_gallery():
 #route to calorie calculator
 @app.route('/calorie_calc')
 def calorie_calc():
-    #Recipes = Recipe_Calories.query.all()
-    return render_template('calorie_calc.html')
     form = CalorieCalcForm()
     if form.validate_on_submit():
         # do all the stuff
