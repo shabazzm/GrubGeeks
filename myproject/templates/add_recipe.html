@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    <h1 class="display-4">Add Recipe</h1>
+    <form method="post" class="form-group">
+        
+        {{form.recipe_name.label(class="form-group")}}{{form.recipe_name(class="form-control")}}<br>
+        {{form.calories.label(class="form-group")}}{{form.calories(class="form-control")}}<br>
+        {{form.submit(class="btn-info")}}
+    </form>
+</div>
+
+{% endblock %}
