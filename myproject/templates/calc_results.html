@@ -1,0 +1,46 @@
+<!--File for Calorie Calculator Page using extension from base html-->
+
+{% extends "base.html" %}
+{% block content %}
+
+<div class="container " style="width: 25rem; margin:0 auto; float:none;" >
+
+<ul>
+
+  {% if recipes %}
+
+       {% for recipe in recipes %}
+        <li>
+          {% if recipe[0]==1 %}
+          <a href="{{ url_for('chicken_quesadila') }}">Chicken Quesadilla</a>
+          {% elif  recipe[0]==2 %}
+          <a href="{{ url_for('green_beans') }}">Green Beans</a>
+          {% elif recipe[0]==3 %}
+          <a href="{{ url_for('italian_parmesean_chicken') }}">Italian Parmesan Chicken</a>
+          {% elif recipe[0]==4 %}
+          <a href="{{ url_for('lemon_rosemary_salmon') }}">Lemon Rosemary Salmon</a>
+          {% elif recipe[0]==5 %}
+          <a href="{{ url_for('orange_chicken') }}">Orange Chicken</a>
+          {% elif recipe[0]==6 %}
+          <a href="{{ url_for('roasted_bsprouts') }}">Roasted Brussel Sprouts</a>
+          {% elif recipe[0]==7 %}
+          <a href="{{ url_for('sweet_potato_chips') }}">Sweet Potato Chips</a>
+          {% elif recipe[0]==8  %}
+          <a href="{{ url_for('thai_basil_chicken') }}">Thai Basil Chicken</a>
+          {% else %}
+          <a href="{{ url_for('white_bean_soup') }}">White Bean Soup</a>
+          {% endif %}
+        </li>
+       {% endfor %}
+ 
+
+ {% endif %}
+
+
+
+</ul>
+
+
+</div>
+
+{% endblock %}
