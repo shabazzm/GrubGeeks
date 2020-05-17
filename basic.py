@@ -122,7 +122,7 @@ def entrees_gallery():
     return render_template('entrees_gallery.html')
 
 #route to calorie calculator
-@app.route('/calorie_calc')
+@app.route('/calorie_calc', methods=['GET', 'POST'])
 def calorie_calc():
     form = CalorieCalcForm()
     if form.validate_on_submit():
@@ -141,7 +141,9 @@ def calorie_calc():
 def calc_results(optimal_calories):
 	calorie_low = optimal_calories-50
 	calorie_high = optimal_calories+50
-	recipes = select([Recipe_Calories]).where(between(Recipe_Calories.calories, calorie_low, calorie_high))
+	query = "SELECT * from Recipe_Calories WHERE calories BETWEEN " + str(calorie_low) + " AND " + str(calorie_high)
+	recipes = db.session.execute(query)
+	# recipes = select([Recipe_Calories]).where(between(Recipe_Calories.calories, calorie_low, calorie_high))
 	return render_template('calc_results.html', recipes=recipes)
 
 #routes to 9 recipe pages
