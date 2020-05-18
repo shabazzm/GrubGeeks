@@ -6,7 +6,7 @@ https://grub-geeks.herokuapp.com/
 
 # Collaborators
 Kayla Smith
-Livia Barwick
+Livia B
 Jasmine Mittal
 Maryum Shabazz
 Rebecca Diaz
