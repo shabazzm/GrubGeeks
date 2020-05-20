@@ -141,12 +141,9 @@ def calorie_calc():
 
 @app.route('/calc_results/<int:optimal_calories>')
 def calc_results(optimal_calories):
-	calorie_low = optimal_calories-50
-	calorie_high = optimal_calories+50
-	query = "SELECT * from Recipe_Calories WHERE calories BETWEEN " + str(calorie_low) + " AND " + str(calorie_high)
-	recipes = db.session.execute(query)
-	# recipes = select([Recipe_Calories]).where(between(Recipe_Calories.calories, calorie_low, calorie_high))
-	return render_template('calc_results.html', recipes=recipes)
+    query = "SELECT * from Recipe_Calories WHERE calories BETWEEN  0 AND " + str(optimal_calories)
+    recipes = db.session.execute(query)
+    return render_template('calc_results.html', recipes=recipes)
 
 #routes to 9 recipe pages
 @app.route('/roasted_bsprouts')
