@@ -125,17 +125,19 @@ def entrees_gallery():
 @app.route('/calorie_calc', methods=['GET', 'POST'])
 def calorie_calc():
     form = CalorieCalcForm()
+    error=None
     if form.validate_on_submit():
         # do all the stuff
         calories_in = int(form.daily_calories.data)
         calorie_goal = int(form.calorie_goal.data)
         if calories_in >= calorie_goal:
-            return redirect('/calorie_calc')
+            error="Calorie goal must be greater than calories consumed"
+            return render_template('calorie_calc.html', form=form, error=error)
         else:
         	optimal_calories = calorie_goal - calories_in
         	return redirect('/calc_results/' + str(optimal_calories))
     else:
-        return render_template('calorie_calc.html', form=form)
+        return render_template('calorie_calc.html', form=form, error=None)
 
 @app.route('/calc_results/<int:optimal_calories>')
 def calc_results(optimal_calories):
