@@ -31,4 +31,4 @@ class AddReplyForm(FlaskForm):
 class CalorieCalcForm(FlaskForm):
     daily_calories = IntegerField('Calories Consumed Today', validators=[DataRequired()])
     calorie_goal = IntegerField('Daily Caloric Goal', validators=[DataRequired()])
-    submit = SubmitField('Get Recipe')
+    submit = SubmitField('Get Recipes')
