@@ -30,13 +30,13 @@ CREATE TABLE "recipe_calories" (
 	"calories" INTEGER NOT NULL
 );
 
-INSERT INTO recipe_calories (recipe_name, calories) VALUES
-	("Chicken Quesadilla", 315),
-	("Roasted Brussels Sprouts", 164),
-	("Green Beans Almondine", 79),
-	("Lemon Rosemary Salmon", 226),
-	("Orange Honey Chicken", 216),
-	("Sweet Potato Chips", 61),
-	("White Bean Soup", 351),
-	("Thai Basil Chicken", 220),
-	("Italian Parmesean Chicken", 290);
+INSERT INTO recipe_calories ("recipe_name", "calories") VALUES
+	('Chicken Quesadilla', 315),
+	('Roasted Brussels Sprouts', 164),
+	('Green Beans Almondine', 79),
+	('Lemon Rosemary Salmon', 226),
+	('Orange Honey Chicken', 216),
+	('Sweet Potato Chips', 61),
+	('White Bean Soup', 351),
+	('Thai Basil Chicken', 220),
+	('Italian Parmesean Chicken', 290);
