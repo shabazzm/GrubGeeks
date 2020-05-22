@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField,PasswordField,SubmitField, TextAreaField
+from wtforms import StringField,PasswordField,SubmitField, TextAreaField, IntegerField
 from wtforms.validators import DataRequired,Email,EqualTo,Length
 from wtforms import ValidationError
 
@@ -27,3 +27,8 @@ class AddPostForm(FlaskForm):
 class AddReplyForm(FlaskForm):
     reply_content = TextAreaField('Reply Content', validators=[DataRequired()])
     submit = SubmitField('Post Reply')
+
+class CalorieCalcForm(FlaskForm):
+    daily_calories = IntegerField('Calories Consumed Today', validators=[DataRequired()])
+    calorie_goal = IntegerField('Daily Caloric Goal', validators=[DataRequired()])
+    submit = SubmitField('Get Recipes')
