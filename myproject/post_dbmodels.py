@@ -10,11 +10,11 @@ class Post(db.Model):
     post_id = db.Column('post_id', db.Integer, primary_key=True, nullable=False)    
     user_id = db.Column(db.Integer, db.ForeignKey('user_accounts.user_id'), nullable=False)    
     date_created = db.Column('date_created', db.DateTime, nullable=False)
-	
-	def __init__(self, user_id, post_id, date_created):
-	   self.user_id = user_id
-	   self.post_id = post_id
-	   self.date_created = date_created
+
+    def __init__(self, user_id, post_id, date_created):
+        self.user_id = user_id
+        self.post_id = post_id
+        self.date_created = date_created
     
 
 
@@ -47,5 +47,5 @@ class Reply(Post):
     reply_content = db.Column('subject', db.String(254), nullable=False)
 
     def __init__(self, user_id, post_id, subject, main_post_content, date_created):
-            super().__init__(user_id=user_id, post_id=post_id, date_created=date_created)
-            self.reply_content = reply_content
+        super().__init__(user_id=user_id, post_id=post_id, date_created=date_created)
+        self.reply_content = reply_content
