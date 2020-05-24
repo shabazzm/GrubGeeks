@@ -12,9 +12,9 @@ class Post(db.Model):
     date_created = db.Column('date_created', db.DateTime, nullable=False)
 	
 	def __init__(self, user_id, post_id, date_created):
-	    self.user_id = user_id
-	    self.post_id = post_id
-	    self.date_created = date_created
+	   self.user_id = user_id
+	   self.post_id = post_id
+	   self.date_created = date_created
     
 
 
