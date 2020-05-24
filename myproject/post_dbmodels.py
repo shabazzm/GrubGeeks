@@ -39,7 +39,7 @@ class Topic(Post):
 #User Replies
 class Reply(Post):
 
-	__tablename__ = 'post_replies'
+    __tablename__ = 'post_replies'
     __table_args__ = {'sqlite_autoincrement': True}
     
     reply_id = db.Column('reply_id', db.Integer, primary_key=True)
