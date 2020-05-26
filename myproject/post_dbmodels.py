@@ -6,7 +6,7 @@ from flask_login import UserMixin
 
 # Base Post
 class Post(db.Model):
-
+    __abstract__ = True
     post_id = db.Column('post_id', db.Integer, primary_key=True, nullable=False)    
     user_id = db.Column(db.Integer, db.ForeignKey('user_accounts.user_id'), nullable=False)    
     date_created = db.Column('date_created', db.DateTime, nullable=False)
@@ -20,7 +20,6 @@ class Post(db.Model):
 
 #User Posts
 class Topic(Post):
-
     __tablename__ = 'user_posts'
     __table_args__ = {'sqlite_autoincrement': True}
     
@@ -38,7 +37,6 @@ class Topic(Post):
 
 #User Replies
 class Reply(Post):
-
     __tablename__ = 'post_replies'
     __table_args__ = {'sqlite_autoincrement': True}
     
