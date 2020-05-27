@@ -2,7 +2,7 @@ from myproject import app,db
 from flask import Flask, render_template,session,redirect,url_for,request, flash, abort
 from flask_login import login_user,login_required,logout_user, current_user
 from myproject.dbModels import User_Accounts, Recipe_Calories
-from myproject.post_dbmodels import Topic, Reply
+from myproject.post_dbmodels import Topic, Reply, Post
 from myproject.forms import LoginForm,RegistrationForm, AddPostForm, AddReplyForm, CalorieCalcForm
 from datetime import datetime
 from sqlalchemy.sql import select
