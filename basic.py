@@ -36,7 +36,8 @@ def login():
             next = request.args.get('next')
 
             if next == None or not next[0]=='/':
-                next = url_for('home')
+                # next = url_for('home')
+                next = request.referrer
 
             return redirect(next)
         else:
