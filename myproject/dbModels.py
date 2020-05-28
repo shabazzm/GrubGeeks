@@ -51,6 +51,9 @@ class User_Accounts(db.Model, UserMixin):
     def check_password(self,password):
         return check_password_hash(self.password_hash,password)
 
+    def hash_password(self,password):
+        return generate_password_hash(password)
+
     def get_id(self):
         return (self.user_id)
 

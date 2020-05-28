@@ -50,16 +50,19 @@
       <div class="form-group">
         {{form.submit(class='btn btn-info')}}
       </div>
-    <!--referenced https://stackoverflow.com/questions/30497236/python-flask-flash-not-working-correctly/30497806-->
-    {% with messages = get_flashed_messages() %}
-      {% if messages %}
-        <ul class="flashes">
-           {% for message in messages %}
-            <div class="message_flash">{{ message }}</div>
-           {% endfor %}
-       </ul>
-     {% endif %}
-    {% endwith %}
+
+      <!--https://flask.palletsprojects.com/en/1.1.x/patterns/flashing/-->
+      {% with confirmations = get_flashed_messages(category_filter=["UserRegister"]) %}
+      {% if confirmations %}
+      <div class="confirmation">
+        {%- for msg in confirmations %}
+          <li class="confirmMessage">{{ msg }}</li>
+        {% endfor -%}
+      </div>
+      {% endif %}
+      {% endwith %}
+
+
     <div class="login-signup">
       <span>Already have an account? <a href="{{ url_for('login') }}">Log in.</a></span>
     </div>

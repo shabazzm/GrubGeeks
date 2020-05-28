@@ -14,9 +14,9 @@ class RegistrationForm(FlaskForm):
     user_name = StringField('Username',validators=[DataRequired()])
     password = PasswordField('Password',validators=[DataRequired(),
                             EqualTo('pass_confirm',message='Passwords do not match. Please re-enter.'),
-                            Length(min=6, max=25, message='Password must be at  6-25 characters')])
+                            Length(min=6, max=25, message='Password must be at 6-25 characters')])
     pass_confirm = PasswordField('Confirm Password', validators=[DataRequired()])
-    
+
     submit = SubmitField('Register!')
 
 class AddPostForm(FlaskForm):
@@ -32,3 +32,18 @@ class CalorieCalcForm(FlaskForm):
     daily_calories = IntegerField('Calories Consumed Today', validators=[DataRequired()])
     calorie_goal = IntegerField('Daily Caloric Goal', validators=[DataRequired()])
     submit = SubmitField('Get Recipes')
+
+class UpdateUserName(FlaskForm):
+    user_name = StringField('New Username',validators=[DataRequired()])
+    submit = SubmitField('Update User')
+
+class UpdateEmail(FlaskForm):
+    email_address = StringField('New Email',validators=[DataRequired(),Email(message='Enter a valid email')])
+    submit = SubmitField('Update Email')
+
+class UpdatePassword(FlaskForm):
+    password = PasswordField('New Password',validators=[DataRequired(),
+                            EqualTo('pass_confirm',message='Passwords do not match. Please re-enter.'),
+                            Length(min=6, max=25, message='Password must be at 6-25 characters')])
+    pass_confirm = PasswordField('Confirm New Password', validators=[DataRequired()])
+    submit = SubmitField('Update Password')

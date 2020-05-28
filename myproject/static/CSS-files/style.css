@@ -1,0 +1,9 @@
+.confirmMessage {
+  color:red;
+  font-size:18px;
+  list-style: none;
+}
+
+.errors {
+  color:red;
+}
