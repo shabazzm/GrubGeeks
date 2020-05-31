@@ -34,15 +34,12 @@ def login():
         elif user.check_password(form.password.data) and user is not None:
             login_user(user)
             next = request.args.get('next')
-
             if next == None or not next[0]=='/':
-                # next = url_for('home')
-                next = request.referrer
-
+                next = url_for('home')
             return redirect(next)
         else:
             flash('Invalid username/password combination')
-    return render_template('login.html',form=form)
+    return render_template('login.html', form=form)
 
 @app.route('/register',methods=['GET','POST'])
 def register():
@@ -114,7 +111,7 @@ def post(post_id):
         flash("Reply Posted")
         return redirect('/post/' + str(post_id))
     else:
-        replies = db.session.execute("SELECT reply_id, user_id, reply_content, date_created FROM Post_Replies WHERE post_id = " + str(post_id))
+        replies = db.session.execute("SELECT reply_id, user_id, reply_content, date_created FROM Post_Replies WHERE post_id = " + str(post_id) + " INNER JOIN User_Accounts ON Post_Replies.user_id=User_Accounts.user_id")
         return render_template('post.html', post=post, replies=replies, form=form, author=author)
 
 #routes to food gallery
