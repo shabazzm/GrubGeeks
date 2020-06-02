@@ -1,13 +1,9 @@
 {% extends "base.html" %}
 {% block content %}
-<<<<<<< HEAD
 <div class="container">
 
   <!--https://flask.palletsprojects.com/en/1.1.x/patterns/flashing/-->
 
-=======
-<div class="container mx-auto">
->>>>>>> global-styling
     <h2>{{ post.subject }} </h2>
     <h3> Posted by: {{ author.user_name }} on {{ post.date_created }} </h3>
     <p> {{ post.main_post_content }} </p>
@@ -32,7 +28,7 @@
     </div>
     {% endif %}
     {% endwith %}
-    
+
     {% for reply in replies %}
     <div class="card">
         <div class="card-body">
