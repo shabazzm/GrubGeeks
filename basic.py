@@ -73,6 +73,7 @@ def login():
 		if user is None:
 			flash('This user does not exist in our system. Please try again.','UserLogin')
 
+<<<<<<< HEAD
 		elif user.check_password(form.password.data) and user is not None:
 			login_user(user)
 			next = request.args.get('next')
@@ -84,6 +85,17 @@ def login():
 		else:
 			flash('Invalid username/password combination','UserLogin')
 	return render_template('login.html',form=form)
+=======
+        elif user.check_password(form.password.data) and user is not None:
+            login_user(user)
+            next = request.args.get('next')
+            if next == None or not next[0]=='/':
+                next = url_for('home')
+            return redirect(next)
+        else:
+            flash('Invalid username/password combination')
+    return render_template('login.html', form=form)
+>>>>>>> global-styling
 
 @app.route('/register',methods=['GET','POST'])
 def register():
@@ -143,6 +155,7 @@ def successful_add_post(post_id):
 # view a specific post's thread (get) / post reply (post)
 @app.route('/post/<int:post_id>', methods=['GET', 'POST'])
 def post(post_id):
+<<<<<<< HEAD
 	post = User_Posts.query.filter_by(post_id=post_id).first()
 	form = AddReplyForm()
 	author = User_Accounts.query.filter_by(user_id=post.user_id).first()
@@ -157,6 +170,22 @@ def post(post_id):
 	else:
 		replies = db.session.execute("SELECT reply_id, user_id, reply_content, date_created FROM Post_Replies WHERE post_id = " + str(post_id))
 		return render_template('post.html', post=post, replies=replies, form=form, author=author)
+=======
+    post = User_Posts.query.filter_by(post_id=post_id).first()
+    form = AddReplyForm()
+    author = User_Accounts.query.filter_by(user_id=post.user_id).first()
+    if form.validate_on_submit():
+        reply_content = form.reply_content.data
+        user_id=current_user.user_id
+        date_created=datetime.now()
+        db.session.execute("INSERT INTO Post_Replies (post_id, user_id, reply_content, date_created) VALUES (" + str(post_id) + ", " + str(user_id) + ", '" + reply_content + "', '" +  str(date_created) + "')")
+        db.session.commit()
+        flash("Reply Posted")
+        return redirect('/post/' + str(post_id))
+    else:
+        replies = db.session.execute("SELECT reply_id, user_id, reply_content, date_created FROM Post_Replies WHERE post_id = " + str(post_id) + " INNER JOIN User_Accounts ON Post_Replies.user_id=User_Accounts.user_id")
+        return render_template('post.html', post=post, replies=replies, form=form, author=author)
+>>>>>>> global-styling
 
 #routes to food gallery
 @app.route('/entrees_gallery')
