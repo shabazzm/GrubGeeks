@@ -11,14 +11,25 @@
     <!--favicon-->
     <link rel="icon" type="img/png" sizes="32x32" href="/static/favicon-32x32.png">
     <link rel="icon" type="img/png" sizes="16x16" href="/static/favicon-16x16.png">
+    <!-- custom css for footer -->
+    <style>
+      .footer {
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        text-align: center;
+        background-color: #5cd895;
+      }
+    </style>
   </head>
 
   <!-- Nabvar with drop down-->
-  <body style="background-color: #379683;">
+  <body style="background-color: #8fdbcc;">
 
 
     <nav class="navbar sticky-top navbar-expand-lg navbar-light" style="background-color: #5cd895;">
-    <a class="navbar-brand" href="{{url_for('home')}}"><img src="static\logo.png" width="150" height="75" alt=""></a>
+    <a class="navbar-brand" href="{{url_for('home')}}"><img src={{ url_for('static', filename = 'logo.png') }} width="150" height="75" alt=""></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
