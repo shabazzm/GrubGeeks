@@ -3,43 +3,73 @@
 {% extends "base.html" %}
 {% block content %}
 
-<div class="container " style="width: 25rem; margin:0 auto; float:none;" >
-
-<ul>
+<div class="container " style="width: 700px; margin:0 auto; float:none;">
+  <div id="recipeResults">{{ recipeCount }} Result(s) Total</div>
 
   {% if recipes %}
-
        {% for recipe in recipes %}
-        <li>
-          {% if recipe[0]==1 %}
-          <a href="{{ url_for('chicken_quesadila') }}">Chicken Quesadilla</a>
-          {% elif  recipe[0]==2 %}
-          <a href="{{ url_for('green_beans') }}">Green Beans</a>
-          {% elif recipe[0]==3 %}
-          <a href="{{ url_for('italian_parmesean_chicken') }}">Italian Parmesan Chicken</a>
-          {% elif recipe[0]==4 %}
-          <a href="{{ url_for('lemon_rosemary_salmon') }}">Lemon Rosemary Salmon</a>
-          {% elif recipe[0]==5 %}
-          <a href="{{ url_for('orange_chicken') }}">Orange Chicken</a>
-          {% elif recipe[0]==6 %}
-          <a href="{{ url_for('roasted_bsprouts') }}">Roasted Brussel Sprouts</a>
-          {% elif recipe[0]==7 %}
-          <a href="{{ url_for('sweet_potato_chips') }}">Sweet Potato Chips</a>
-          {% elif recipe[0]==8  %}
-          <a href="{{ url_for('thai_basil_chicken') }}">Thai Basil Chicken</a>
-          {% else %}
-          <a href="{{ url_for('white_bean_soup') }}">White Bean Soup</a>
-          {% endif %}
-        </li>
+          <div class="card">
+              <div class="card-body">
+
+                {% if recipe[0]==1 %}
+                <img src="\static\chicken_quesadila.jpg" alt="chickenques" width="90" height="75">
+                <span class="recipeTitle">Chicken Quesadilla</span>
+                <div class="recipeCal">Calories: {{ recipe[2] }}</div>
+                <div class="recipeLink"><a href="{{ url_for('chicken_quesadila') }}">Click Here for Recipe</a></div>
+
+                {% elif  recipe[0]==2 %}
+                <img src="\static\green_beans.jpg" alt="greenbeans" width="90" height="75">
+                <span class="recipeTitle">Green Beans</span>
+                <div class="recipeCal">Calories: {{ recipe[2] }}</div>
+                <div class="recipeLink"><a href="{{ url_for('green_beans') }}">Click Here for Recipe</a></div>
+
+                {% elif recipe[0]==3 %}
+                <img src="\static\italian_parmesean_chicken.jpg" alt="italian_parm" width="90" height="75">
+                <span class="recipeTitle">Italian Parmesan Chicken</span>
+                <div class="recipeCal">Calories: {{ recipe[2] }}</div>
+                <div class="recipeLink"><a href="{{ url_for('italian_parmesean_chicken') }}">Click Here for Recipe</a></div>
+
+                {% elif recipe[0]==4 %}
+                <img src="\static\lemon_rosemary_salmon.jpg" alt="lemon_rosemary" width="90" height="75">
+                <span class="recipeTitle">Lemon Rosemary Salmon</span>
+                <div class="recipeCal">Calories: {{ recipe[2] }}</div>
+                <div class="recipeLink"><a href="{{ url_for('lemon_rosemary_salmon') }}">Click Here for Recipe</a></div>
+
+                {% elif recipe[0]==5 %}
+                <img src="\static\orange_chicken.jpg" alt="orange_chicken" width="90" height="75">
+                <span class="recipeTitle">Orange Chicken</span>
+                <div class="recipeCal">Calories: {{ recipe[2] }}</div>
+                <div class="recipeLink"><a href="{{ url_for('orange_chicken') }}">Click Here for Recipe</a></div>
+
+                {% elif recipe[0]==6 %}
+                <img src="\static\bsprouts.jpg" alt="bsprouts" width="90" height="75">
+                <span class="recipeTitle">Roasted Brussel Sprouts</span>
+                <div class="recipeCal">Calories: {{ recipe[2] }}</div>
+                <div class="recipeLink"><a href="{{ url_for('roasted_bsprouts') }}">Click Here for Recipe</a></div>
+
+                {% elif recipe[0]==7 %}
+                <img src="\static\sweet_potato_chips.jpg" alt="sweet_potato_chips" width="90" height="75">
+                <span class="recipeTitle">Sweet Potato Chips</span>
+                <div class="recipeCal">Calories: {{ recipe[2] }}</div>
+                <div class="recipeLink"><a href="{{ url_for('sweet_potato_chips') }}">Click Here for Recipe</a></div>
+
+                {% elif recipe[0]==8  %}
+                <img src="\static\thai_basil_chicken.jpg" alt="thai_basil_chicken" width="90" height="75">
+                <span class="recipeTitle">Thai Basil Chicken</span>
+                <div class="recipeCal">Calories: {{ recipe[2] }}</div>
+                <div class="recipeLink"><a href="{{ url_for('thai_basil_chicken') }}">Click Here for Recipe</a></div>
+
+                {% else %}
+                <img src="\static\white_bean_soup.jpg" alt="white_bean_soup" width="90" height="75">
+                <span class="recipeTitle">White Bean Soup</span>
+                <div class="recipeCal">Calories: {{ recipe[2] }}</div>
+                <div class="recipeLink"><a href="{{ url_for('white_bean_soup') }}">Click Here for Recipe</a></div>
+
+                {% endif %}
+            </div>
+          </div>
        {% endfor %}
- 
-
  {% endif %}
-
-
-
-</ul>
-
 
 </div>
 

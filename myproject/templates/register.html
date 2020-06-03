@@ -3,7 +3,9 @@
 {% extends "base.html" %}
 {% block content %}
 
-  <div class="container " style="width: 25rem; margin:0 auto; float:none;" >
+  <div class="container " style="width: 25rem; margin:0 auto; float:none;">
+    <div id="loginRegContainer">
+      <h4 class="loginRegister">Create Account</h4>
     <form method="POST" >
       {{form.hidden_tag()}}
 
@@ -67,5 +69,6 @@
       <span>Already have an account? <a href="{{ url_for('login') }}">Log in.</a></span>
     </div>
     </form>
+    </div>
   </div>
 {% endblock %}
