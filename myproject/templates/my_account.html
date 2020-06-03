@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+  <div class="jumbotron">
+      <h1>My Account</h1>
+      <p>You may review and update your account details here.</p>
+
+      <!--https://flask.palletsprojects.com/en/1.1.x/patterns/flashing/-->
+      {% with confirmations = get_flashed_messages(category_filter=["UserAccountConfirm"]) %}
+      {% if confirmations %}
+      <div class="confirmation">
+        {%- for msg in confirmations %}
+          <li class="confirmMessage">{{ msg }}</li>
+        {% endfor -%}
+      </div>
+      {% endif %}
+      {% endwith %}
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <h6>My Current Information</h6></br>
+      <p>Username: {{current_user.user_name}}</p>
+      <p>Email Address: {{current_user.email_address}}</p>
+    </div>
+  </div>
+
+  <div class="card" >
+    <div class="card-body">
+      <h6>Update your Username</h6></br>
+      <form class="form-inline" method="POST">
+        {{user_name_form.hidden_tag()}}
+        {{user_name_form.user_name.label(class="mr-sm-2")}}{{user_name_form.user_name(class="form-control mb-2 mr-sm-2")}}
+        <div class="form-check mb-2 mr-sm-2"></div></br></br>
+        {{user_name_form.submit(class="btn btn-primary mb-2")}}
+      </form>
+    </div>
+  </div>
+
+  <div class="card" >
+    <div class="card-body">
+      <h6>Update your Email Address</h6></br>
+      <form class="form-inline" method="POST">
+        {{email_address_form.hidden_tag()}}
+        {{email_address_form.email_address.label(class="mr-sm-2")}}{{email_address_form.email_address(class="form-control mb-2 mr-sm-2")}}
+        <div class="form-check mb-2 mr-sm-2"></div></br></br>
+        {{email_address_form.submit(class="btn btn-primary mb-2")}}
+      </form>
+    </div>
+  </div>
+
+  <div class="card" >
+    <div class="card-body">
+      <h6>Update your Password</h6></br>
+      <form class="form-inline" method="POST">
+        {{password_form.hidden_tag()}}
+        {{password_form.password.label(class="mr-sm-2")}}{{password_form.password(class="form-control mb-2 mr-sm-2")}}
+        {{password_form.pass_confirm.label(class="mr-sm-2")}}{{password_form.pass_confirm(class="form-control mb-2 mr-sm-2")}}
+        {% if password_form.password.errors %}
+         <ul class="errors">
+           {% for error in password_form.password.errors %}
+             <li>{{ error }}</li>{% endfor %}
+         </ul>
+       {% endif %}
+        {% if password_form.pass_confirm.errors %}
+         <ul class="errors">
+           {% for error in password_form.pass_confirm %}
+             <li>{{ error }}</li>{% endfor %}
+         </ul>
+       {% endif %}
+        <div class="form-check mb-2 mr-sm-2"></div></br></br>
+        {{password_form.submit(class="btn btn-primary mb-2")}}
+      </form>
+    </div>
+  </div></br>
+</div>
+
+{% endblock %}

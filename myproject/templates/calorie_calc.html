@@ -2,8 +2,22 @@
 
 {% extends "base.html" %}
 {% block content %}
+<div class="container">
+<div class="jumbotron">
+	<h1>Calorie Calculator</h1>
+	<p>The calorie calculator tool will provide students with recipe
+		suggestions to fulfill their daily caloric needs.</br>
+		<ul><li>If you don't know how many calories you have consumed today,
+		 <a href="https://caloriecontrol.org/healthy-weight-tool-kit/food-calorie-calculator/" target=”_blank”>click here</a>
+		 to calculate your intake so far.</li>
+		 <li>If you don’t know your daily caloric goal,
+			<a href="https://www.calculator.net/calorie-calculator.html" target=”_blank”>click here</a>
+			to find your optimal intake based on metrics such as your
+			weight, height, age, and gender.</li></ul>
+	 </p>
+</div>
 
-<div class="container " style="width: 25rem; margin:0 auto; float:none;" >
+<div class="container" id="calorieCalcContainer" style="width: 25rem; float:none;" >
 	{% if error != None %}
 		<div class='alert alert-warning' role='alert'> {{error}}</div>
 	{% endif %}

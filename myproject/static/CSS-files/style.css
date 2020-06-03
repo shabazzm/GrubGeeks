@@ -1,0 +1,56 @@
+.confirmMessage {
+  color:red;
+  font-size:18px;
+  list-style: none;
+}
+
+.errors {
+  color:red;
+}
+
+.footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+  background-color: #5cd895;
+}
+
+#loginRegContainer, #calorieCalcContainer {
+  background-color: #fafafa;
+  padding: 50px;
+  margin-top: 25px;
+  border-radius: 5px;
+}
+
+
+.loginRegister {
+  color: #379683;
+  font-size: 25px;
+  padding: 5px;
+  text-align: center;
+}
+
+#recipeResults {
+  padding: 5px;
+}
+
+.recipeTitle {
+  margin: 10px;
+  font-size: 25px;
+}
+
+.recipeCal {
+  position:relative;
+  margin-top:-28px;
+  margin-left:105px;
+}
+
+.recipeLink {
+  text-align: right;
+}
+
+body {
+  margin-bottom: 100px; /*To fix overlap issue with the footer bar*/
+}

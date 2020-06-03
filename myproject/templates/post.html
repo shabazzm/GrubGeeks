@@ -2,29 +2,39 @@
 {% block content %}
 
 <div class="container mx-auto">
-    <h2>{{ post.subject }} </h2>
-    <h3> Posted by: {{ author.user_name }} on {{ post.date_created }} </h3>
-    <p> {{ post.main_post_content }} </p>
-    <hr>
-    {% if current_user.is_authenticated %}
-        <form method="post">
-            {{form.hidden_tag()}}
-            {{form.reply_content.label(class="form-group")}}{{form.reply_content(class="form-control", rows="3")}} <br>
-            {{form.submit(class="btn btn-info")}}
-        </form>
-    {% else %}
-        <a href="/login">Login</a> or <a href="/register">Register</a> to post a reply.
-    {% endif %}
-    <hr>
-    
-    {% for reply in replies %}
-    <div class="card">
-        <div class="card-body">
-            <p> {{ reply.reply_content }} </p>
-            <p> Posted by: {{ reply.user_name }} </p>
-        </div>
-    </div>
-    {% endfor %} 
+		<h2>{{ post.subject }} </h2>
+		<h3> Posted by: {{ author.user_name }} on {{ post.date_created }} </h3>
+		<p> {{ post.main_post_content }} </p>
+		<hr>
+		{% if current_user.is_authenticated %}
+				<form method="post">
+						{{form.hidden_tag()}}
+						{{form.reply_content.label(class="form-group")}}{{form.reply_content(class="form-control", rows="3")}} <br>
+						{{form.submit(class="btn btn-info")}}
+				</form>
+		{% else %}
+				<a href="/login">Login</a> or <a href="/register">Register</a> to post a reply.
+		{% endif %}
+		<hr>
+
+		{% with confirmations = get_flashed_messages(category_filter=["UserReply"]) %}
+		{% if confirmations %}
+		<div class="confirmation">
+			{%- for msg in confirmations %}
+				<li class="confirmMessage">{{ msg }}</li>
+			{% endfor -%}
+		</div>
+		{% endif %}
+		{% endwith %}
+
+		{% for reply in replies %}
+		<div class="card">
+				<div class="card-body">
+						<p> {{ reply.reply_content }} </p>
+						<p> Posted by: {{ reply.user_name }} </p>
+				</div>
+		</div>
+		{% endfor %}
 </div>
-    
+
 {% endblock %}
