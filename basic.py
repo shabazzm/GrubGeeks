@@ -154,7 +154,9 @@ def post(post_id):
         return redirect('/post/' + str(post_id))
     else:
         replies = db.session.execute("SELECT * FROM Post_Replies INNER JOIN User_Accounts ON Post_Replies.user_id=User_Accounts.user_id WHERE Post_Replies.post_id = " + str(post_id))
-        return render_template('post.html', post=post, replies=replies, form=form, author=author)
+        reply_q = "SELECT COUNT(*) FROM Post_Replies INNER JOIN User_Accounts ON Post_Replies.user_id=User_Accounts.user_id WHERE Post_Replies.post_id = " + str(post_id)
+        reply_count = db.session.execute(reply_q).fetchone()
+        return render_template('post.html', post=post, replies=replies, form=form, author=author, reply_count=reply_count[0])
 
 #routes to food gallery
 @app.route('/entrees_gallery')
