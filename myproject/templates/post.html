@@ -1,15 +1,19 @@
 {% extends "base.html" %}
 {% block content %}
 
-<div class="container mx-auto">
-		<h2>{{ post.subject }} </h2>
-		<h3> Posted by: {{ author.user_name }} on {{ post.date_created }} </h3>
+<div class="container mx-auto" style="width: 50rem; float:none; margin-top:1rem">
+    <div class="card">
+      <div class="card-body">
+		<h1>{{ post.subject }} </h1>
+		<h3> Posted by: {{ author.user_name }} on {{ post.date_created.strftime('%m-%d-%Y') }} at {{ post.date_created.strftime('%H:%M') }} </h3>
 		<p> {{ post.main_post_content }} </p>
+      </div>
+    </div>
 		<hr>
 		{% if current_user.is_authenticated %}
 				<form method="post">
 						{{form.hidden_tag()}}
-						{{form.reply_content.label(class="form-group")}}{{form.reply_content(class="form-control", rows="3")}} <br>
+						<h3>Post A Reply:</h3>{{form.reply_content(class="form-control", rows="3")}} <br>
 						{{form.submit(class="btn btn-info")}}
 				</form>
 		{% else %}
@@ -26,12 +30,13 @@
 		</div>
 		{% endif %}
 		{% endwith %}
-
+        <h4> Replies: {{ reply_count }} </h4>
 		{% for reply in replies %}
-		<div class="card">
+		<div class="card" style="margin-top:1rem">
 				<div class="card-body">
+                        <p> Posted by: {{ reply.user_name }} on {{ reply.date_created.strftime('%m-%d-%Y') }} at {{ post.date_created.strftime('%H:%M') }} </p>
 						<p> {{ reply.reply_content }} </p>
-						<p> Posted by: {{ reply.user_name }} </p>
+						
 				</div>
 		</div>
 		{% endfor %}
